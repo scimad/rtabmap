@@ -76,33 +76,47 @@ int main(int argc, char* argv[])
 	UEventsManager::addHandler(mainWindow);
 
 	/* Start thread's task */
+	std::cout << "scimad::1" <<std::endl;
 	if(mainWindow->isSavedMaximized())
 	{
 		mainWindow->showMaximized();
+		std::cout << "scimad::2" <<std::endl;
 	}
 	else
 	{
+		std::cout << "scimad:3" << std::endl;
 		mainWindow->show();
+
 	}
 
+		std::cout << "scimad:4" << std::endl;
 	RtabmapThread * rtabmap = new RtabmapThread(new Rtabmap());
 	rtabmap->start(); // start it not initialized... will be initialized by event from the gui
+
+		std::cout << "scimad:5" << std::endl;
 	UEventsManager::addHandler(rtabmap);
     
+		std::cout << "scimad:6" << std::endl;
     if(!database.empty())
     {
     	mainWindow->openDatabase(database.c_str(), parameters);
+		std::cout << "scimad 6.1" <<std::endl;
     }
     else if(parameters.size())
     {
+		std::cout << "scimad 6.1" <<std::endl;
     	mainWindow->updateParameters(parameters);
     }
 
+		std::cout << "scimad:7" << std::endl;
 	// Now wait for application to finish
 	app->connect( app, SIGNAL( lastWindowClosed() ),
 				app, SLOT( quit() ) );
+
+		std::cout << "scimad:8" << std::endl;
 	app->exec();// MUST be called by the Main Thread
 
+		std::cout << "scimad:9" << std::endl;
 	/* Remove handlers */
 	UEventsManager::removeHandler(mainWindow);
 	UEventsManager::removeHandler(rtabmap);

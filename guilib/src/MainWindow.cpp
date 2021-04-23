@@ -5115,6 +5115,7 @@ void MainWindow::newDatabase()
 
 void MainWindow::openDatabase()
 {
+			UWARN("SCIMAD OPENING DATABASE") ;
 	QString path = QFileDialog::getOpenFileName(this, tr("Open database..."), _defaultOpenDatabasePath.isEmpty()?_preferencesDialog->getWorkingDirectory():_defaultOpenDatabasePath, tr("RTAB-Map database files (*.db)"));
 	if(!path.isEmpty())
 	{
@@ -5124,6 +5125,8 @@ void MainWindow::openDatabase()
 
 void MainWindow::openDatabase(const QString & path, const ParametersMap & overridedParameters)
 {
+	std::cout << "scimad 6.0.1" << std::endl;
+
 	if(_state != MainWindow::kIdle)
 	{
 		UERROR("Database can only be opened in IDLE state.");
@@ -5134,6 +5137,8 @@ void MainWindow::openDatabase(const QString & path, const ParametersMap & overri
 	if(UFile::exists(value) &&
 	   UFile::getExtension(value).compare("db") == 0)
 	{
+		std::cout << "scimad 6.0.2" << std::endl;
+
 		_openedDatabasePath.clear();
 		_newDatabasePath.clear();
 		_newDatabasePathOutput.clear();
@@ -5147,12 +5152,15 @@ void MainWindow::openDatabase(const QString & path, const ParametersMap & overri
 		DBDriver * driver = DBDriver::create();
 		if(driver->openConnection(value, false))
 		{
+			std::cout << "scimad 6.0.3" << std::endl;
 			ParametersMap parameters = driver->getLastParameters();
+			ParametersMap parameters;
 			driver->closeConnection(false);
 			delete driver;
-
+			std::cout << "scimad 6.0.3.1" << std::endl;
 			if(parameters.size())
 			{
+				std::cout << "scimad 6.0.3.2" << std::endl;
 				//backward compatibility with databases not saving all parameters, use default for not saved ones
 				for(ParametersMap::const_iterator iter=Parameters::getDefaultParameters().begin(); iter!=Parameters::getDefaultParameters().end(); ++iter)
 				{
@@ -5215,7 +5223,7 @@ void MainWindow::openDatabase(const QString & path, const ParametersMap & overri
 				}
 			}
 		}
-
+		std::cout << "scimad 6.0.4" << std::endl;
 		this->post(new RtabmapEventCmd(RtabmapEventCmd::kCmdInit, value, 0, _preferencesDialog->getAllParameters()));
 		applyPrefSettings(_preferencesDialog->getAllParameters(), false);
 	}

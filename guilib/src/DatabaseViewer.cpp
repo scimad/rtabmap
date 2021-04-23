@@ -835,7 +835,7 @@ bool DatabaseViewer::openDatabase(const QString & path)
 					if(differentParameters.size())
 					{
 						int r = QMessageBox::question(this,
-								tr("Update parameters..."),
+								tr("scimad:: Update parameters..."),
 								tr("The database is using %1 different parameter(s) than "
 								   "those currently set in Core parameters panel. Do you want "
 								   "to use database's parameters?").arg(differentParameters.size()),
@@ -2956,7 +2956,8 @@ void DatabaseViewer::editSaved2DMap()
 						if(scan.angleIncrement()!=0)
 						{
 							// copy meta data
-							scan = LaserScan(									cv::Mat(filtered, cv::Range::all(), cv::Range(0, oi)),
+							scan = LaserScan(
+									cv::Mat(filtered, cv::Range::all(), cv::Range(0, oi)),
 									scan.format(),
 									scan.rangeMin(),
 									scan.rangeMax(),
@@ -2968,7 +2969,8 @@ void DatabaseViewer::editSaved2DMap()
 						else
 						{
 							// copy meta data
-							scan = LaserScan(									cv::Mat(filtered, cv::Range::all(), cv::Range(0, oi)),
+							scan = LaserScan(
+									cv::Mat(filtered, cv::Range::all(), cv::Range(0, oi)),
 									scan.maxPoints(),
 									scan.rangeMax(),
 									scan.format(),
